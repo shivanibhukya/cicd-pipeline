@@ -1,0 +1,23 @@
+
+pipeline{
+    agent any
+    stages{
+        stage('checkout'){
+            steps{
+              git 'https://github.com/shivanibhukya/cicd-pipeline.git'
+            }
+        }
+        stage('image build'){
+            steps{
+                sh 'cd node-todo-app'
+                sh 'docker build -t node-image .'
+            }
+        }
+        stage('run the container'){
+            steps{
+                sh 'docker run -d -p 8000:8000 node-image'
+                sh 'echo succesfully running container'
+            }
+        }
+    }
+}
